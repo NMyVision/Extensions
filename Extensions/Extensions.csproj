@@ -11,6 +11,8 @@
     <PackageTags>NMyVision, Extensions, Conversion</PackageTags>
     <AssemblyName>NMyVision.Extensions</AssemblyName>
     <RootNamespace>NMyVision.Extensions</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Collection of extensions.</Description>
   </PropertyGroup>
 
 </Project>
