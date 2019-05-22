@@ -29,13 +29,6 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
-    command: 'pack'
-    feedsToUse: 'select'
-    packagesToPack: '**/Extensions.csproj'
-    versioningScheme: 'off'
-
-- task: NuGetCommand@2
-  inputs:
     command: 'push'
     feedsToUse: 'select'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
