@@ -64,6 +64,10 @@ namespace NMyVision.Extensions
 
             try
             {
+                if (type.IsEnum && value is string)
+                    return Enum.Parse(type, value.ToString());
+
+
                 return Convert.ChangeType(value, type);
             }
             catch
@@ -99,6 +103,9 @@ namespace NMyVision.Extensions
 
                 if (type == typeof(Guid) )                
                     return Guid.Parse(text);
+
+                if (type.IsNullableType())
+                    return null;
 
                 throw;
             }

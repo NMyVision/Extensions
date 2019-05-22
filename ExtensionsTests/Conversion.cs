@@ -72,12 +72,7 @@ namespace ConverterTests
                 ["no"] = false
             };
 
-            AreEqual(true, "1");
-            AreEqual(true, "TRUE");
-            AreEqual(true, "-1");
-
-            AreEqual(false, "0");
-            AreEqual(false, "FALSE");
+            dict.Each(kv => Assert.AreEqual(kv.Value, kv.Key.To<bool>()));
 
             Assert.AreEqual(true.ToString(), true.To<string>(), $"'{ true }'.To<string>() --> { true }");
             Assert.AreEqual(false.ToString(), false.To<string>(), $"'{ false }'.To<string>() --> { false }");
@@ -107,20 +102,11 @@ namespace ConverterTests
             //if tests work for one numeric type it should work for all...
             AreEqual(TestCharacters.Mario, "Mario");
             AreEqual(TestCharacters.Luigi, "1");
-            /*
-            //test Lookup value from attribute
-            AreEqual(TestCharacters.PrincessPeach, "P");
+                        
+            Assert.ThrowsException<ArgumentException>(() => "c".To<TestCharacters?>());
 
-            //test lower case
-            //for now this will fail in the future, I might add an option field that could be passed to converters ie : Get<> and To<> to help with Format and CaseSensitivity
-            //AreEqual(TestCharacters.Mario, "mario");
-            AreEqual(TestCharacters.PrincessPeach, "p");
-
-            TestInvalidInputs(TestCharacters.Bowser);
-
-            var x = "c".To<TestCharacters?>();
-            Assert.AreEqual(null, x, "Failed to convert nullable enum to null");
-            */
+            Assert.AreEqual(null, "c".To<TestCharacters?>(null), "Failed to convert nullable enum to null");
+             
 
             Assert.AreEqual(TestCharacters.Mario, "Mario".To<TestCharacters?>(), "Failed to convert 'Mario' enum to 'Mario' when nullable enum");
         }
@@ -152,7 +138,7 @@ namespace ConverterTests
             AssertHelper.ShouldThrowException(() => "1.1".To<int>(), "1.1 --> error");
             Assert.AreEqual(2, "1.1".To<int>(2), "'1.1' (default:2) --> 2");
 
-            Assert.AreEqual(null, "x".To<int?>(), "x.To<int?> --> null");
+            Assert.AreEqual(null, "x".To<int?>(null), "x.To<int?> --> null");
             Assert.AreEqual("0.01", 0.01d.To<string>(), "0.01.To<string> --> 0.01");
 
 
@@ -166,6 +152,8 @@ namespace ConverterTests
             var d = new DateTime(2015, 9, 15);
 
             AreEqual(d, "2015/09/15");
+
+            AreEqual(d, "09/15/2015");
 
             TestInvalidInputs(1);
 
