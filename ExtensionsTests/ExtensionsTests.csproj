@@ -59,7 +59,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Converter\Extensions.csproj">
+    <ProjectReference Include="..\Extensions\Extensions.csproj">
       <Project>{ff295659-a1e9-4290-926a-c1c1eccb5707}</Project>
       <Name>Extensions</Name>
     </ProjectReference>
