@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>NMyVision.Extensions</PackageId>
+    <Company>NMyVision</Company>
+    <Product>NMyVision.Extensions</Product>
+    <Authors>M. Gambill</Authors>
+    <PackageProjectUrl>https://github.com/NMyVision/Extensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/NMyVision/Extensions</RepositoryUrl>
+    <PackageTags>NMyVision, Extensions, Conversion</PackageTags>
+    <AssemblyName>NMyVision.Extensions</AssemblyName>
+    <RootNamespace>NMyVision.Extensions</RootNamespace>
+  </PropertyGroup>
+
+</Project>
