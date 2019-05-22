@@ -26,12 +26,14 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
+- task: CmdLine@2
+  inputs:
+    script: 'echo $(Build.ArtifactStagingDirectory)'
 - task: NuGetCommand@2
   inputs:
     command: 'push'
     feedsToUse: 'select'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/NMyVision.Extensions*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'Nuget Service'
     versioningScheme: 'off'
