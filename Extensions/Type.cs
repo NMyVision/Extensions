@@ -20,9 +20,30 @@ namespace NMyVision.Extensions
 
         public static bool IsEnumerableType(this Type enumerableType)
             => FindGenericType(typeof(IEnumerable<>), enumerableType) != null;
-
+       
+        /// <summary>
+        /// For types like DateTime? this will return DateTime.
+        /// </summary>
+        /// <param name="type">Type being tested.</param>
         public static Type GetNonNullableType(this Type type)        
             => (type.IsNullableType()) ? type.GetGenericArguments()[0] : type;
+        
+        /// <summary>
+        /// Get Type for underlining structures, will get T of Array[T] or IEnumerable<T> otherwise just return the type passed in.
+        /// </summary>
+        /// <example></example>
+        public static Type GetGenericType(this Type type)
+        {
+            if (type.IsArray && type.IsEnumerableType())
+                return type.GetElementType();
+
+            if (type.IsGenericType && type.IsEnumerableType())
+                return type.GetGenericArguments().First();
+
+            return type;
+        }
+	
+        public static Boolean IsString(this Type type) => (type == typeof(string));
 
         /// <summary>
         /// Determine if the Type is an anonymous object.
