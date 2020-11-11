@@ -90,5 +90,28 @@ namespace NMyVision.Extensions
               || type.Equals(typeof(string))
               || type.Equals(typeof(decimal)));
         }
+	    
+        /// <summary>
+        /// Returns a more readable friendly name for various types.
+        /// </summary>
+        /// <param name="type">Type being tested.</param>	    
+	public static string GetFriendlyName(this Type type)
+	{
+		if (type.IsString()) return type.Name;
+		
+		if (type.IsEnumerableType())
+		{
+			return $"{GetFriendlyName(type.GetGenericType())}[]";
+		}
+		else if (type.IsAnonymousType())
+		{
+			return $"({String.Join(",", type.GetGenericArguments().Select(GetFriendlyName)) })";
+		}
+		else if (type.IsGenericType)
+		{
+			return $"{type.Name.Split('`').First()}<{String.Join(",", type.GetGenericArguments().Select(GetFriendlyName)) }>";
+		}
+		return type.Name;
+	}
     }
 }
