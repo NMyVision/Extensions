@@ -65,14 +65,14 @@ namespace NMyVision.Extensions
                     cancellationToken.ThrowIfCancellationRequested();
                     T current = enumerator.Current;
                     task = enumerator.MoveNext();
-                    await action(current);
+                    await action(current).ConfigureAwait(false);
                 }
                 while (task);
             }
         }
 
         /// <summary>
-        /// 
+        /// Perform a task, on each item in the collection then return the original collection.
         /// </summary>
         /// <typeparam name="T">Type of IEnumerable items</typeparam>
         /// <param name="items">Source to perform action on</param>
@@ -82,6 +82,25 @@ namespace NMyVision.Extensions
         {
             action(items);
             return items;
+        }
+
+
+        /// <summary>
+        /// Seperate a list into two lists, values that resolve to true and values that do not.
+        /// </summary>
+        public static (IEnumerable<T> trueResults, IEnumerable<T> falseResults) Seperate<T>(this IEnumerable<T> items, Func<T, bool> fn)
+        {
+            List<T> t = new List<T>();
+            List<T> f = new List<T>();
+            foreach (var item in items)
+            {
+                if (fn(item))
+                    t.Add(item);
+                else
+                    f.Add(item);
+            }
+
+            return (t, f);
         }
 
     }

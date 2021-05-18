@@ -6,7 +6,7 @@ namespace NMyVision.Extensions
 {
     public static partial class TypeExtensions
     {
-        public static bool IsNullableType( this Type type)
+        public static bool IsNullableType(this Type type)
             => type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
 
@@ -16,18 +16,18 @@ namespace NMyVision.Extensions
         /// <param name="type">Type being tested.</param>
         public static bool IsNullableType<T>(this T item)
             => item == null || item.GetType().IsNullableType();
-        
+
 
         public static bool IsEnumerableType(this Type enumerableType)
             => FindGenericType(typeof(IEnumerable<>), enumerableType) != null;
-       
+
         /// <summary>
         /// For types like DateTime? this will return DateTime.
         /// </summary>
         /// <param name="type">Type being tested.</param>
-        public static Type GetNonNullableType(this Type type)        
+        public static Type GetNonNullableType(this Type type)
             => (type.IsNullableType()) ? type.GetGenericArguments()[0] : type;
-        
+
         /// <summary>
         /// Get Type for underlining structures, will get T of Array[T] or IEnumerable<T> otherwise just return the type passed in.
         /// </summary>
@@ -42,7 +42,7 @@ namespace NMyVision.Extensions
 
             return type;
         }
-	
+
         public static Boolean IsString(this Type type) => (type == typeof(string));
 
         /// <summary>
@@ -90,28 +90,28 @@ namespace NMyVision.Extensions
               || type.Equals(typeof(string))
               || type.Equals(typeof(decimal)));
         }
-	    
+
         /// <summary>
         /// Returns a more readable friendly name for various types.
         /// </summary>
         /// <param name="type">Type being tested.</param>	    
-	public static string GetFriendlyName(this Type type)
-	{
-		if (type.IsString()) return type.Name;
-		
-		if (type.IsEnumerableType())
-		{
-			return $"{GetFriendlyName(type.GetGenericType())}[]";
-		}
-		else if (type.IsAnonymousType())
-		{
-			return $"({String.Join(",", type.GetGenericArguments().Select(GetFriendlyName)) })";
-		}
-		else if (type.IsGenericType)
-		{
-			return $"{type.Name.Split('`').First()}<{String.Join(",", type.GetGenericArguments().Select(GetFriendlyName)) }>";
-		}
-		return type.Name;
-	}
+        public static string GetFriendlyName(this Type type)
+        {
+            if (type.IsString()) return type.Name;
+
+            if (type.IsEnumerableType())
+            {
+                return $"{GetFriendlyName(type.GetGenericType())}[]";
+            }
+            else if (type.IsAnonymousType())
+            {
+                return $"({String.Join(",", type.GetGenericArguments().Select(GetFriendlyName)) })";
+            }
+            else if (type.IsGenericType)
+            {
+                return $"{type.Name.Split('`').First()}<{String.Join(",", type.GetGenericArguments().Select(GetFriendlyName)) }>";
+            }
+            return type.Name;
+        }
     }
 }
